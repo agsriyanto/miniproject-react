@@ -18,18 +18,14 @@ function App() {
       });
   }, [])
 
-  useEffect(() => {
-    const userFilter = users.filter((el) => el.firstName.toLowerCase() === filterFirstName.toLowerCase());
-    console.log({userFilter})
-  }, [filterFirstName, users])
-
   const handleSearch = (firstName) => {
     const value = firstName.target.value;
     setFilterFirstName(value);
-    // const userFilter = users.filter((el) => el.firstName.toLowerCase() === value.toLowerCase());
-
-    // console.log({userFilter})
   }
+
+  const filteredUsers = users.filter(user =>
+    user.firstName.toLowerCase().includes(filterFirstName.toLowerCase())
+  );
 
   return (
     <>
@@ -39,9 +35,9 @@ function App() {
         <>
           <input onChange={handleSearch} placeholder='Filter First Name' />
           <ul>
-            {users?.map((res) => (
+            {filteredUsers?.map((res) => (
               <li key={res.id}>
-                <div style={{display: 'flex', gap: '20px'}} onClick={() => setIsDetail(res.id)}>
+                <div style={{display: 'flex', gap: '20px', cursor: 'pointer'}} onClick={() => setIsDetail(res.id)}>
                   <p>{res.id}</p>
                   <p>{res.firstName}</p>
                 </div>
